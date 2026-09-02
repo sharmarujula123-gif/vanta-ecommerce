@@ -1,294 +1,491 @@
-# Vanta Bags Frontend
+# Vanta Ecomm
 
-A modern React e-commerce frontend for a bag-shopping experience. The application is built with React 19, Vite, React Router, Zustand, Axios, React Hook Form, Recharts, Lucide React, React Hot Toast, and Tailwind CSS.
+> A modern full-stack fashion e-commerce platform for discovering and purchasing curated fashion and accessories across **Dresses, Tops, Bags, Footwear, and Jewelry**.
 
-## Overview
+Vanta Ecomm is a production-style e-commerce frontend built with React and designed around a clean, premium shopping experience. It includes product discovery, category collections, search and filtering, authentication, wishlist and cart functionality, checkout, order management, customer accounts, and a dedicated admin dashboard.
 
-The frontend provides:
+The frontend communicates with a REST API backend for authentication, products, categories, orders, addresses, reviews, payments, and administration.
 
-- Product browsing and product detail pages
-- Category-based product collections
-- Product filtering, sorting, and pagination
-- Authentication flows for login and registration
-- Shopping cart and wishlist
-- Recently viewed products
-- Checkout and order placement flow
-- Customer account and saved addresses
-- Order history and order details
-- Order-success flow
-- Admin dashboard
-- Admin product management
-- Admin order management and order details
-- Light/dark theme support
-- Responsive layouts
-- Error boundary and toast notifications
-- API service modules separated from UI components
+---
 
-## Tech Stack
+## ✨ Features
 
-| Technology | Purpose |
-|---|---|
-| React 19 | UI and component architecture |
-| Vite | Development server and production build |
-| React Router | Client-side routing |
-| Zustand | Application state management |
-| Axios | HTTP/API communication |
-| React Hook Form | Form handling |
-| Recharts | Dashboard/data visualization |
-| Lucide React | Icons |
-| React Hot Toast | User notifications |
-| Tailwind CSS | Utility-first styling |
-| ESLint | Code quality and linting |
+### 🛍️ Shopping Experience
 
-## Project Structure
+* Browse products across multiple fashion categories
+* Dedicated category collections
+* Product detail pages
+* Product search
+* Filtering and sorting
+* Pagination
+* Wishlist
+* Shopping cart
+* Recently viewed products
+* Responsive product grids
+* Collection benefits and promotional sections
+* Light and dark theme support
+
+### 👤 Customer Account
+
+* User registration and login
+* Authentication state management
+* Customer account dashboard
+* Saved addresses
+* Order history
+* Individual order details
+* Checkout flow
+* Order confirmation
+* Protected customer routes
+
+### 💳 Checkout & Orders
+
+* Address selection and management
+* Contact information
+* Order summary
+* Payment selection
+* Razorpay payment integration through the backend
+* Order creation
+* Order success page
+* Order tracking/details
+
+### 🔐 Authentication & Security
+
+* JWT-based authentication
+* Protected routes
+* Customer/admin access separation
+* Centralized authentication state
+* Error handling
+* API service abstraction
+
+### 🛠️ Admin Dashboard
+
+* Admin authentication and route protection
+* Dashboard
+* Product management
+* Product creation and editing
+* Product listing
+* Order management
+* Order details
+* Administrative workflows
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+
+| Technology          | Purpose                       |
+| ------------------- | ----------------------------- |
+| **React 19**        | UI development                |
+| **Vite**            | Development and build tooling |
+| **React Router**    | Client-side routing           |
+| **Zustand**         | Application state management  |
+| **Axios**           | REST API communication        |
+| **React Hook Form** | Form management               |
+| **Tailwind CSS**    | Styling and responsive UI     |
+| **Recharts**        | Admin analytics               |
+| **Lucide React**    | Interface icons               |
+| **React Hot Toast** | Notifications                 |
+
+### Backend Integration
+
+The frontend consumes a REST API powered by:
+
+* Node.js
+* Express
+* MongoDB
+* Mongoose
+* JWT
+* Zod
+* Razorpay
+* Cloudinary
+
+---
+
+## 🏗️ Architecture
+
+```text
+┌───────────────────────────────┐
+│          Vanta Ecomm          │
+│        React Frontend         │
+└───────────────┬───────────────┘
+                │
+                │ REST API
+                ▼
+┌───────────────────────────────┐
+│        Node.js + Express      │
+│          Backend API          │
+└───────────────┬───────────────┘
+                │
+        ┌───────┴────────┐
+        ▼                ▼
+┌──────────────┐  ┌──────────────┐
+│   MongoDB    │  │  Cloudinary  │
+│  Data Store  │  │ Product Media│
+└──────────────┘  └──────────────┘
+
+                │
+                ▼
+        ┌──────────────┐
+        │   Razorpay   │
+        │   Payments   │
+        └──────────────┘
+```
+
+---
+
+## 📁 Project Structure
 
 ```text
 src/
-├── assets/                 # Images and static frontend assets
-├── components/             # Reusable UI components
-│   ├── admin/              # Admin-specific components
-│   ├── checkout/           # Checkout sections and forms
-│   └── collection/         # Product collection UI
-├── constants/              # Shared constants
-├── context/                # React context providers
-├── data/                   # Static frontend data
-├── hooks/                  # Reusable application hooks
-├── layouts/                # Main and admin layouts
-├── pages/                  # Route-level pages
-│   └── admin/              # Admin pages
-├── services/               # API/service layer
-├── store/                  # Zustand stores
-├── styles/                 # Shared style definitions
-└── utils/                  # Utility functions and Tailwind helpers
+├── assets/
+│   └── category/
+│
+├── components/
+│   ├── admin/
+│   ├── checkout/
+│   ├── collection/
+│   ├── navbar/
+│   ├── products/
+│   ├── AdminRoute.jsx
+│   ├── AuthModal.jsx
+│   ├── ErrorBoundary.jsx
+│   ├── Footer.jsx
+│   ├── Navbar.jsx
+│   └── ToastProvider.jsx
+│
+├── constants/
+│
+├── context/
+│
+├── data/
+│   ├── categoryHeroes.js
+│   └── storeCategories.js
+│
+├── hooks/
+│   ├── useCheckout.js
+│   └── useProductCollection.js
+│
+├── layouts/
+│   ├── AdminLayout.jsx
+│   └── MainLayout.jsx
+│
+├── pages/
+│   ├── admin/
+│   ├── About.jsx
+│   ├── Account.jsx
+│   ├── Addresses.jsx
+│   ├── Cart.jsx
+│   ├── Category.jsx
+│   ├── Checkout.jsx
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── OrderDetails.jsx
+│   ├── Orders.jsx
+│   ├── OrderSuccess.jsx
+│   ├── ProductDetails.jsx
+│   ├── Products.jsx
+│   ├── RecentlyViewed.jsx
+│   └── Wishlist.jsx
+│
+├── services/
+├── store/
+├── styles/
+├── utils/
+│
+├── App.jsx
+├── index.css
+└── main.jsx
 ```
 
-## Main Routes
+---
+
+## 🧭 Application Routes
 
 ### Storefront
 
-- `/` - Home
-- `/products` - Product listing
-- `/products/:slug` - Product details
-- `/category` - Category listing
-- `/category/:slug` - Category collection
-- `/about` - About page
-- `/cart` - Shopping cart
-- `/wishlist` - Wishlist
-- `/recently-viewed` - Recently viewed products
+| Route              | Description              |
+| ------------------ | ------------------------ |
+| `/`                | Homepage                 |
+| `/products`        | Product collection       |
+| `/products/:slug`  | Product details          |
+| `/category`        | Category overview        |
+| `/category/:slug`  | Category collection      |
+| `/about`           | About Vanta Ecomm        |
+| `/cart`            | Shopping cart            |
+| `/wishlist`        | Wishlist                 |
+| `/recently-viewed` | Recently viewed products |
 
 ### Customer
 
-- `/login` - Login
-- `/register` - Registration
-- `/account` - Account
-- `/account/orders` - Customer order history
-- `/account/addresses` - Saved addresses
-- `/orders/:id` - Order details
-- `/checkout` - Checkout
-- `/order-success/:orderId` - Successful order page
+| Route                     | Description           |
+| ------------------------- | --------------------- |
+| `/login`                  | Customer login        |
+| `/register`               | Customer registration |
+| `/account`                | Account dashboard     |
+| `/account/addresses`      | Saved addresses       |
+| `/account/orders`         | Order history         |
+| `/orders/:id`             | Order details         |
+| `/checkout`               | Checkout              |
+| `/order-success/:orderId` | Order confirmation    |
 
 ### Admin
 
-Admin routes are protected by the application's admin route guard.
+| Route               | Description         |
+| ------------------- | ------------------- |
+| `/admin`            | Admin dashboard     |
+| `/admin/products`   | Product management  |
+| `/admin/orders`     | Order management    |
+| `/admin/orders/:id` | Admin order details |
 
-- `/admin` - Admin dashboard
-- `/admin/products` - Product management
-- `/admin/orders` - Order management
-- `/admin/orders/:id` - Admin order details
+---
 
-## State Management
+## 🎨 Design Philosophy
 
-The frontend uses Zustand stores for application state, including:
+Vanta Ecomm is designed around a **premium fashion retail aesthetic** rather than a generic marketplace interface.
 
-- Authentication
-- Cart
-- Wishlist
-- Recently viewed products
+The frontend focuses on:
 
-Authentication initialization runs before the React application is rendered, allowing the frontend to restore the current authentication state when the application starts.
+* Clean typography
+* Editorial-style layouts
+* Product-first presentation
+* Responsive design
+* Minimal interface elements
+* Clear shopping flows
+* Consistent spacing and visual hierarchy
+* Light/dark theme support
+* Mobile-friendly navigation
 
-## API Layer
+The goal is to create a shopping experience that feels closer to a curated fashion storefront than a traditional catalogue application.
 
-API communication is separated into service modules under `src/services/`.
+---
 
-Current service modules include:
+## ⚙️ Getting Started
 
-- `api.js`
-- `authService.js`
-- `productService.js`
-- `categoryService.js`
-- `cartService.js`
-- `orderService.js`
-- `addressService.js`
-- `paymentService.js`
-- `reviewService.js`
-- `orderCleanupService.js`
+### Prerequisites
 
-The API base URL is configured through the Vite environment variable `VITE_API_URL`.
+Make sure you have installed:
 
-Example:
+* Node.js 18+
+* npm
+* Git
 
-```env
-VITE_API_URL=http://localhost:5000/api
+The Vanta Ecomm backend must also be running for product, authentication, cart, order, and checkout functionality.
+
+---
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/sharmarujula123-gif/vanta-bags-ecomm.git
+
+cd vanta-bags-ecomm
 ```
 
-Do not commit real production secrets or private credentials to the repository.
+> Update the repository URL after renaming the GitHub repository to `vanta-ecomm`.
 
-## Getting Started
+---
 
-### 1. Requirements
-
-Use a current Node.js version compatible with the installed Vite/React toolchain.
-
-### 2. Install dependencies
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configure environment variables
+---
 
-Create a `.env` file in the project root:
+### 3. Configure Environment Variables
+
+Create a `.env` file in the frontend root:
 
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Update the value when the backend is deployed.
+Use the URL of your deployed backend when running the application in production.
 
-### 4. Start the development server
+---
+
+### 4. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-Vite will display the local development URL in the terminal.
+Vite will start the development server and provide the local application URL.
 
-### 5. Run the production build
+---
+
+## 🏭 Production Build
+
+Create an optimized production build:
 
 ```bash
 npm run build
 ```
 
-### 6. Preview the production build
+Preview the production build locally:
 
 ```bash
 npm run preview
 ```
 
-### 7. Run linting
+---
+
+## 🧪 Code Quality
+
+Run ESLint with:
 
 ```bash
 npm run lint
 ```
 
-## Backend Requirement
+The project uses ESLint to maintain consistent code quality and identify potential issues during development.
 
-This repository contains the frontend. It expects a compatible backend API to be running at the URL configured in `VITE_API_URL`.
+---
 
-For local development, the current configuration points to:
+## 🔌 API Integration
+
+Frontend API communication is separated into service modules rather than being tightly coupled to individual components.
+
+The frontend uses Axios to communicate with the backend REST API.
+
+Typical API areas include:
 
 ```text
-http://localhost:5000/api
+Authentication
+Products
+Categories
+Cart
+Wishlist
+Orders
+Addresses
+Reviews
+Payments
+Admin
 ```
 
-The backend is responsible for server-side functionality such as authentication, products, categories, cart data, orders, addresses, reviews, payments, and other persistent application data.
+This separation makes the frontend easier to maintain and allows backend services to evolve independently.
 
-## Authentication
+---
 
-The frontend includes authentication-aware state and protected admin navigation.
+## 🔐 Authentication Flow
 
-The application initializes authentication before rendering and uses a dedicated Zustand authentication store. Customer account/order functionality and admin functionality depend on the backend authentication system being available.
+```text
+User
+ │
+ ▼
+Login / Register
+ │
+ ▼
+Authentication API
+ │
+ ▼
+JWT Authentication
+ │
+ ▼
+Frontend Auth Store
+ │
+ ├── Customer Routes
+ │
+ └── Admin Routes
+```
 
-## Styling and UI
+Protected routes are handled through authentication and admin route guards.
 
-The application uses Tailwind CSS together with project-specific style utilities.
+---
 
-The Vite configuration includes the React plugin and Tailwind CSS Vite integration.
+## 📱 Responsive Design
 
-Theme handling supports light and dark modes. The initial theme is restored from local storage when available, otherwise the user's system preference is used.
+The interface is designed to work across:
 
-## Error Handling
+* Desktop
+* Laptop
+* Tablet
+* Mobile
 
-The frontend includes:
+Responsive layouts are implemented using Tailwind CSS and dedicated mobile navigation components.
 
-- An application-level error boundary
-- Toast notifications for user feedback
-- Protected admin routes
-- Loading and empty states within feature pages
-- A fallback 404 route
+---
 
-## Development Guidelines
+## 🚀 Deployment
 
-When adding a new feature:
+The frontend can be deployed to modern hosting platforms that support Vite applications.
 
-1. Put route-level screens in `src/pages/`.
-2. Put reusable UI in `src/components/`.
-3. Put API calls in `src/services/`.
-4. Put reusable state in `src/store/`.
-5. Put reusable behavior in `src/hooks/`.
-6. Keep static configuration/data in `src/constants/` or `src/data/`.
-7. Avoid putting API calls directly inside reusable presentational components when a service module can own that responsibility.
-8. Run `npm run lint` before committing.
-9. Run `npm run build` to verify that the production build succeeds.
+Before deployment:
 
-## Available Scripts
+1. Configure the production `VITE_API_URL`
+2. Verify the backend is publicly accessible
+3. Test authentication
+4. Test product loading
+5. Test cart functionality
+6. Test checkout and payment flow
+7. Verify protected routes
+8. Run the production build
 
 ```bash
-npm run dev       # Start Vite development server
-npm run build     # Create production build
-npm run lint      # Run ESLint
-npm run preview   # Preview production build
+npm run build
 ```
 
-## Deployment Notes
+---
 
-For a production deployment:
+## 🔮 Future Improvements
 
-1. Build the frontend with `npm run build`.
-2. Deploy the generated `dist/` directory to a static hosting provider.
-3. Configure the production `VITE_API_URL` environment variable.
-4. Make sure the backend allows requests from the deployed frontend origin.
-5. Configure SPA fallback/rewrites so client-side routes such as `/products` and `/account` resolve to `index.html`.
+Potential improvements for future versions include:
 
-The frontend can be deployed separately from the backend.
+* Advanced product recommendations
+* Product reviews and ratings UI improvements
+* Coupon and promotional-code support
+* Enhanced inventory indicators
+* Advanced admin analytics
+* Order status notifications
+* Product comparison
+* Improved accessibility
+* SEO optimization
+* Performance optimization
+* Progressive Web App support
 
-## Environment Variables
+---
 
-### `.env`
+## 👨‍💻 Project Purpose
 
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+Vanta Ecomm was developed as a full-stack portfolio project to demonstrate practical experience with:
 
-### `.env.example`
+* Modern React development
+* Component-based UI architecture
+* REST API integration
+* State management
+* Authentication and protected routes
+* E-commerce workflows
+* Product discovery
+* Shopping cart and wishlist systems
+* Checkout and payment integration
+* Customer account management
+* Admin dashboards
+* Responsive UI development
+* Frontend/backend separation
 
-Commit a `.env.example` file containing placeholder configuration, but keep real `.env` files out of version control.
+---
 
-Example:
+## 📌 Project Highlights
 
-```env
-VITE_API_URL=http://localhost:5000/api
-```
+**Application:** Vanta Ecomm
+**Type:** Full-Stack Fashion E-commerce Platform
+**Frontend:** React + Vite
+**State Management:** Zustand
+**Styling:** Tailwind CSS
+**Backend:** Node.js + Express
+**Database:** MongoDB
+**Authentication:** JWT
+**Payments:** Razorpay
+**Media:** Cloudinary
+**Validation:** Zod
+**Testing:** Vitest + Supertest
 
-## Portfolio Notes
+---
 
-This frontend demonstrates a production-style separation between:
+## 📄 License
 
-- UI components
-- Route pages
-- Layouts
-- State management
-- API/service modules
-- Reusable hooks
-- Authentication
-- Admin functionality
-- Form handling
-- Responsive styling
-- Error handling
+This project is currently intended as a portfolio and learning project.
 
-It is intended to be used with the project's compatible backend for a complete full-stack e-commerce application.
-
-## License
-
-Add your preferred license here before publishing the repository publicly.
+License information can be added here when the project is released under a specific open-source license.

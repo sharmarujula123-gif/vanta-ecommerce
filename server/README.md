@@ -1,343 +1,535 @@
-# Vanta Bags Backend
+Vanta Ecomm Backend
 
-REST API backend for the Vanta Bags e-commerce application.
+REST API backend for Vanta Ecomm, a modern full-stack fashion e-commerce platform covering Dresses, Tops, Bags, Footwear, and Jewelry.
 
-The backend is built with Node.js and Express and uses MongoDB through Mongoose. It provides the server-side functionality required by the Vanta Bags frontend, including authentication, products, categories, cart, orders, addresses, reviews, payments, image uploads, and admin operations.
+The backend provides the core server-side services for authentication, products, categories, carts, orders, addresses, reviews, payments, image uploads, and administrative operations.
 
-## Tech Stack
+✨ Features
 
-| Technology | Purpose |
-|---|---|
-| Node.js | JavaScript runtime |
-| Express 5 | REST API server |
-| MongoDB | Database |
-| Mongoose | MongoDB ODM |
-| JWT | Authentication |
-| bcryptjs | Password hashing |
-| Razorpay | Payment integration |
-| Cloudinary | Image/media storage |
-| Multer | Multipart file uploads |
-| Zod | Request/data validation |
-| Helmet | HTTP security headers |
-| CORS | Cross-origin API access |
-| express-rate-limit | API rate limiting |
-| cookie-parser | Cookie handling |
-| slugify | URL-friendly product/category slugs |
-| Vitest | Automated testing |
-| Supertest | HTTP API testing |
-| Nodemon | Development server reloads |
+Authentication & Authorization
 
-These dependencies and development tools are defined in the backend package configuration. fileciteturn5file13L746-L781
+User registration and login
 
-## Project Architecture
+JWT-based authentication
 
-The backend follows a layered REST API architecture:
+Protected API routes
 
-```text
+Admin authorization
+
+Password hashing
+
+Authentication middleware
+
+🛍️ Product & Category Management
+
+Product CRUD operations
+
+Category management
+
+Product slugs
+
+Product collections
+
+Product search/filtering support
+
+Image upload handling
+
+Cloudinary integration for product media
+
+🛒 Shopping & Customer Features
+
+Cart management
+
+Saved addresses
+
+Order creation and retrieval
+
+Order details
+
+Product reviews
+
+Customer-specific protected resources
+
+💳 Payments
+
+Razorpay integration
+
+Payment order creation
+
+Payment verification
+
+Razorpay webhook support
+
+Raw request-body handling for webhook verification
+
+🛠️ Admin Operations
+
+Admin-only protected endpoints
+
+Product management
+
+Category management
+
+Order management
+
+Order status workflows
+
+Administrative data access
+
+🔐 API Security
+
+Helmet security headers
+
+CORS configuration
+
+Request rate limiting
+
+Request body size limits
+
+Centralized validation middleware
+
+Centralized error handling
+
+Protected routes and role-based access
+
+🧰 Tech Stack
+
+Node.js
+
+Express
+
+MongoDB
+
+Mongoose
+
+JWT
+
+bcryptjs
+
+Zod
+
+Razorpay
+
+Cloudinary
+
+Multer
+
+Helmet
+
+CORS
+
+express-rate-limit
+
+cookie-parser
+
+slugify
+
+Vitest
+
+Supertest
+
+🏗️ Architecture
+
 Client / Frontend
        │
+       │ HTTP / REST API
        ▼
-   Express API
-       │
-       ├── Routes
-       │      │
-       │      ▼
-       ├── Controllers
-       │      │
-       │      ▼
-       ├── Services / Utilities
-       │      │
-       │      ├── Authentication
-       │      ├── Payments
-       │      ├── Cloudinary
-       │      └── Validation
-       │
-       ▼
-    Mongoose
-       │
-       ▼
-    MongoDB
-```
+┌──────────────────────┐
+│   Express Server     │
+│                      │
+│  Routes              │
+│    ↓                 │
+│  Middleware          │
+│    ↓                 │
+│  Controllers         │
+│    ↓                 │
+│  Models / Mongoose   │
+└──────────┬───────────┘
+           │
+           ▼
+      ┌──────────┐
+      │ MongoDB  │
+      └──────────┘
 
-Keep business logic in the appropriate controller/service layer rather than putting large amounts of application logic directly inside route definitions.
+External Services
+├── Cloudinary → Product image storage
+└── Razorpay   → Payment processing
 
-## Main Backend Responsibilities
+📁 Project Structure
 
-### Authentication
+src/
+├── config/
+│   ├── cloudinary.js
+│   ├── cors.js
+│   ├── db.js
+│   ├── env.js
+│   └── razorpay.js
+│
+├── constants/
+│
+├── context/
+│
+├── controllers/
+│   ├── addressController.js
+│   ├── authController.js
+│   ├── cartController.js
+│   ├── categoryController.js
+│   ├── orderController.js
+│   ├── paymentController.js
+│   ├── productController.js
+│   ├── reviewController.js
+│   └── uploadController.js
+│
+├── middleware/
+│   ├── authenticateUser.js
+│   ├── errorHandler.js
+│   ├── rateLimiter.js
+│   ├── requireAdmin.js
+│   ├── upload.js
+│   ├── uploadImages.js
+│   └── validate.js
+│
+├── models/
+│
+├── routes/
+│   ├── addressRoutes.js
+│   ├── authRoutes.js
+│   ├── cartRoutes.js
+│   ├── categoryRoutes.js
+│   ├── orderRoutes.js
+│   ├── paymentRoutes.js
+│   ├── productRoutes.js
+│   └── reviewRoutes.js
+│
+└── app.js
 
-- User registration
-- User login
-- Password hashing
-- JWT-based authentication
-- Access/refresh token handling
-- Protected customer routes
-- Protected admin functionality
+🔌 API Modules
 
-JWT and bcryptjs are included as backend dependencies. fileciteturn5file13L762-L776
+The API is organized by feature rather than placing all endpoints in a single route file.
 
-### Products
+Module
 
-The API supports product-related operations required by the storefront and admin dashboard, including product retrieval and management.
+Responsibility
 
-### Categories
+Auth
 
-Categories are exposed through the API so the frontend can build category collections and filtering/navigation.
+Registration, login, authentication
 
-### Cart
+Products
 
-The backend provides persistent cart functionality for authenticated customers.
+Product browsing and management
 
-### Orders
+Categories
 
-The API handles order creation, retrieval, customer order history, and administrative order management.
+Category operations
 
-### Addresses
+Cart
 
-Customer shipping/billing address data can be stored and retrieved through the backend.
+Customer cart management
 
-### Reviews
+Orders
 
-Product review functionality is handled server-side so review data can be persisted and associated with products/users.
+Order creation and management
 
-### Payments
+Addresses
 
-The backend integrates Razorpay for payment processing. Razorpay is included in the project dependencies. fileciteturn5file14L821-L828
+Saved customer addresses
 
-### Image Uploads
+Reviews
 
-Multer handles incoming multipart uploads and Cloudinary is used for cloud media storage. fileciteturn5file13L762-L775
+Product reviews
 
-## Security
+Payments
 
-The backend includes several production-oriented security components:
+Razorpay payment operations
 
-- JWT authentication
-- Password hashing with bcryptjs
-- Helmet security headers
-- CORS configuration
-- Express rate limiting
-- Environment-based secrets
-- Request validation with Zod
+Uploads
 
-Helmet and express-rate-limit are part of the installed backend dependencies. fileciteturn5file13L768-L776
+Product/image upload handling
 
-## Environment Variables
+🔐 Request Flow
 
-Create a `.env` file in the backend root.
+HTTP Request
+     │
+     ▼
+CORS / Helmet
+     │
+     ▼
+Rate Limiter
+     │
+     ▼
+Authentication / Authorization
+     │
+     ▼
+Validation
+     │
+     ▼
+Route
+     │
+     ▼
+Controller
+     │
+     ▼
+Mongoose Model
+     │
+     ▼
+MongoDB
 
-Use placeholders locally and provide real credentials only through your local environment or your deployment provider's environment-variable settings.
+For failures, requests are passed to the centralized error handler.
 
-Example:
+⚙️ Environment Variables
 
-```env
+Create a .env file in the backend project root.
+
+Typical configuration includes the values required by the application's database, authentication, Cloudinary, Razorpay, and CORS configuration.
+
+Do not commit .env or production credentials to Git.
+
+Example structure:
+
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-CLIENT_URL=http://localhost:5174
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
 
-JWT_ACCESS_SECRET=your_access_secret
-JWT_REFRESH_SECRET=your_refresh_secret
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-NODE_ENV=development
-
-PAYMENT_MODE=razorpay
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-```
+CLIENT_URL=http://localhost:5173
 
-The current project environment configuration uses port `5000`, a MongoDB connection, a frontend client URL, JWT secrets, Razorpay, Cloudinary, and development/payment settings. Real credentials should **never** be committed to GitHub. fileciteturn5file0L11-L26
+Use the exact variable names required by your existing environment configuration.
 
-## Installation
+🚀 Getting Started
 
-From the backend directory:
+Prerequisites
 
-```bash
+Install:
+
+Node.js
+
+npm
+
+MongoDB or a MongoDB Atlas database
+
+Cloudinary account for image uploads
+
+Razorpay account for payment functionality
+
+1. Clone the repository
+
+git clone https://github.com/sharmarujula123-gif/vanta-bags-ecomm.git
+cd vanta-bags-ecomm
+
+After the repository is renamed, use the updated vanta-ecomm repository URL.
+
+2. Install dependencies
+
 npm install
-```
 
-## Development
+3. Configure environment variables
 
-Start the backend with:
+Create .env and add the required backend configuration.
 
-```bash
+4. Start the development server
+
 npm run dev
-```
 
-The configured development script starts:
+The API will run on the configured port.
 
-```text
-nodemon src/server.js
-```
+5. Verify the API
 
-The production/start script is:
+The backend exposes:
 
-```bash
-npm start
-```
+GET /
+GET /api/health
 
-which runs:
+A successful health response confirms that the server is running.
 
-```text
-node src/server.js
-```
+🧪 Testing
 
-These scripts are defined in `package.json`. fileciteturn5file13L751-L756
+The backend uses Vitest and Supertest for automated testing.
 
-## Testing
+Run the project's configured test command:
 
-Run the test suite once:
-
-```bash
 npm test
-```
 
-Run tests in watch mode:
+If a watch-mode script is configured:
 
-```bash
 npm run test:watch
-```
 
-The project uses Vitest, with a test setup file configured through `vitest.config.js`. fileciteturn5file8L513-L519
+🛡️ Security Practices
 
-Supertest is also included for HTTP/API testing. fileciteturn5file13L778-L781
+The backend includes several defensive layers:
 
-## Database Seeding
+Helmet security middleware
 
-The backend includes a seed command:
+Configurable CORS policy
 
-```bash
-npm run seed
-```
+API rate limiting
 
-which runs:
+JWT authentication
 
-```text
-node src/seed/seed.js
-```
+Admin authorization middleware
 
-Use this when you want to populate the development database with the project's seed data. fileciteturn5file13L751-L756
+Request validation
 
-## Frontend Connection
+Password hashing
 
-The frontend should point its API client to the deployed backend URL.
+Restricted upload handling
 
-For local development:
+Request body size limits
 
-```text
-Frontend → http://localhost:5000/api
-```
+Centralized error handling
 
-The backend uses `CLIENT_URL` to identify the allowed frontend origin.
+Secrets and third-party credentials should always be supplied through environment variables.
 
-When deploying, update the frontend API URL and backend `CLIENT_URL` to the appropriate production URLs.
+☁️ External Services
 
-## Production Deployment Checklist
+Cloudinary
 
-Before deployment:
+Cloudinary is used for product media and image storage, keeping large image assets outside the application server.
 
-- [ ] Create a production MongoDB database
-- [ ] Set a strong `JWT_ACCESS_SECRET`
-- [ ] Set a strong `JWT_REFRESH_SECRET`
-- [ ] Configure the production `CLIENT_URL`
-- [ ] Configure Razorpay production credentials if real payments are enabled
-- [ ] Configure Cloudinary credentials
-- [ ] Set `NODE_ENV=production`
-- [ ] Do not commit `.env`
-- [ ] Configure CORS for the deployed frontend only
-- [ ] Verify rate limiting
-- [ ] Run the test suite
-- [ ] Test the production API from the deployed frontend
+Razorpay
 
-## Important Security Note
+Razorpay is integrated for online payment processing. The backend also provides webhook handling and verifies payment-related requests.
 
-If credentials have ever been committed to GitHub or shared publicly, rotate them.
+📊 Backend Responsibilities
 
-Never place these values directly in source code:
+The backend acts as the application's central business layer between the frontend and external services.
 
-```text
-MONGO_URI
-JWT_ACCESS_SECRET
-JWT_REFRESH_SECRET
-RAZORPAY_KEY_SECRET
-CLOUDINARY_API_SECRET
-```
+It handles:
 
-Use environment variables instead.
+Authentication
 
-## Available Scripts
+Authorization
 
-```bash
-npm run dev          # Development server with Nodemon
-npm start            # Start production server
-npm test             # Run tests once
-npm run test:watch   # Run tests in watch mode
-npm run seed         # Seed the database
-```
+Product data
 
-## API Documentation
+Category data
 
-A separate Swagger/OpenAPI document is not currently required for this portfolio project.
+Cart state
 
-If the API grows substantially, adding an OpenAPI/Swagger specification would be a useful next documentation upgrade.
+Customer addresses
 
-## Recommended Repository Files
+Orders
 
-For the backend repository, keep:
+Reviews
 
-```text
-README.md
-.env.example
-.gitignore
-package.json
-package-lock.json
-src/
-```
+Payment workflows
 
-Do not commit:
+Image uploads
 
-```text
-.env
-node_modules/
-coverage/
-logs/
-```
+Administrative operations
 
-## Full-Stack Relationship
+Validation
 
-The Vanta Bags application is split into two deployable parts:
+Security middleware
 
-```text
-Vanta Bags
-│
-├── Frontend
-│   └── React + Vite
-│
-└── Backend
-    └── Node.js + Express + MongoDB
-```
+Error handling
 
-The frontend consumes the backend REST API, while the backend owns authentication, persistent data, payments, media uploads, and business logic.
+🔄 Frontend Integration
 
-## Portfolio Summary
+The backend is designed to work with the Vanta Ecomm React frontend.
 
-This backend demonstrates a practical full-stack e-commerce API architecture with:
+Vanta Ecomm Frontend
+        │
+        │ Axios / REST
+        ▼
+Vanta Ecomm Backend
+        │
+   ┌────┼───────────────┐
+   ▼    ▼               ▼
+MongoDB Cloudinary    Razorpay
 
-- RESTful API design
-- MongoDB/Mongoose persistence
-- JWT authentication
-- Password hashing
-- Customer and admin flows
-- Product/category management
-- Cart and order processing
-- Payment integration
-- Cloud image uploads
-- Validation
-- Security middleware
-- Rate limiting
-- Automated testing
-- Database seeding
+🚢 Deployment Checklist
 
-It is suitable as the backend component of a junior-to-intermediate full-stack portfolio project.
+Before deploying:
+
+Set production environment variables
+
+Configure the production frontend origin in CORS
+
+Use a secure JWT secret
+
+Configure MongoDB Atlas or another production MongoDB instance
+
+Configure Cloudinary credentials
+
+Configure Razorpay production credentials
+
+Verify webhook configuration
+
+Test authentication and admin authorization
+
+Test product and order flows
+
+Run the automated test suite
+
+Confirm that secrets are not committed to Git
+
+🔮 Future Improvements
+
+Potential backend improvements include:
+
+Expanded automated test coverage
+
+API documentation with OpenAPI/Swagger
+
+Advanced inventory management
+
+Coupon and promotion services
+
+More granular admin permissions
+
+Structured application logging
+
+Background jobs for notifications
+
+Order email notifications
+
+Advanced analytics endpoints
+
+Improved observability and monitoring
+
+🎯 Project Purpose
+
+Vanta Ecomm was built to demonstrate practical full-stack backend engineering skills, including:
+
+REST API design
+
+Node.js and Express development
+
+MongoDB and Mongoose
+
+JWT authentication
+
+Role-based authorization
+
+E-commerce business workflows
+
+Payment integration
+
+Cloud media management
+
+API validation
+
+Security middleware
+
+Automated API testing
+
+Modular backend architecture
+
+📌 Project Summary
+
+Project: Vanta Ecomm
+Type: Full-Stack Fashion E-commerce Platform
+Backend: Node.js + Express
+Database: MongoDB + Mongoose
+Authentication: JWT
+Payments: Razorpay
+Media: Cloudinary
+Validation: Zod
+Testing: Vitest + Supertest
