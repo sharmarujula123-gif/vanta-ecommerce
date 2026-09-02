@@ -1,8 +1,8 @@
-# Vanta Bags 👜
+# Vanta Ecomm 🛍️
 
-A modern full-stack e-commerce application for browsing, purchasing, and managing premium bags.
+A modern full-stack fashion e-commerce platform for discovering and purchasing curated fashion and accessories across Dresses, Tops, Bags, Footwear, and Jewelry.
 
-Vanta Bags is built with a React frontend and a Node.js/Express backend, with MongoDB for persistent data, JWT-based authentication, Cloudinary for image management, and Razorpay for payments.
+Vanta Ecomm is built with a React frontend and Node.js/Express backend, using MongoDB for persistent data, JWT-based authentication, Cloudinary for product media, and Razorpay for online payments.
 
 ---
 
