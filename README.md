@@ -88,7 +88,7 @@ Vanta Ecomm is built with a React frontend and Node.js/Express backend, using Mo
 
 ```text
                     ┌─────────────────────┐
-                    │      Vanta Bags     │
+                    │      Vanta ecomm    │
                     │     React Client    │
                     └──────────┬──────────┘
                                │
