@@ -1,5 +1,9 @@
 # Vanta Ecomm 🛍️
 
+<p align="center">
+  <img src="assets/vanta-ecomm.png" alt="Nexa AI" width="100%">
+</p>
+
 A modern full-stack fashion e-commerce platform for discovering and purchasing curated fashion and accessories across Dresses, Tops, Bags, Footwear, and Jewelry.
 
 Vanta Ecomm is built with a React frontend and Node.js/Express backend, using MongoDB for persistent data, JWT-based authentication, Cloudinary for product media, and Razorpay for online payments.
